@@ -5,9 +5,9 @@ require 'json'
 require 'cinch' #gem install cinch
 
 $api_key = ""
-File.open("data/api_key.txt","r").each_line {|f| $api_key << f.chomp}
+File.open("../kt_irc_bot_data/api_key.txt","r").each_line {|f| $api_key << f.chomp}
 $main_chat_id = ""
-File.open("data/mcid.txt","r").each_line {|f| $main_chat_id << f.chomp}
+File.open("../kt_irc_bot_data/mcid.txt","r").each_line {|f| $main_chat_id << f.chomp}
 
 escapes = {
 	#" " => "%20",
@@ -80,7 +80,7 @@ loop do
 	res = JSON.parse(Net::HTTP.get(URI("https://api.telegram.org/bot#{$api_key}/getUpdates")))
 	ircBot.debug("Successfully parsed JSON")
 	$lmid = 0
-	File.open("data/lmid.txt","r").each_line do |l|
+	File.open("../kt_irc_bot_data/lmid.txt","r").each_line do |l|
 		if l.chomp != ""
 			$lmid = l.chomp.to_i
 		end
@@ -104,7 +104,7 @@ loop do
 		ircBot.debug("result is empty.")
 	end
 	
-	File.open("data/lmid.txt","w") do |f|
+	File.open("../kt_irc_bot_data/lmid.txt","w") do |f|
 		f.puts("#{$lmid}")
 	ircBot.debug("Successfully wrote to file")
 	end
